@@ -1,6 +1,6 @@
-DROP TABLE clients IF EXISTS;
-DROP TABLE accounts IF EXISTS;
-DROP TABLE operations IF EXISTS;
+DROP TABLE client IF EXISTS;
+DROP TABLE account IF EXISTS;
+DROP TABLE operation IF EXISTS;
 
 
 
