@@ -1,6 +1,7 @@
 package fr.ych.userstory.banking.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,9 +29,13 @@ public class Operation implements Serializable{
     private int id;
 
 	
-    @Column
+    @Column(name = "type_operation")
+    private String typeOperation;
+	
+
+	@Column
     private double amount;
-    /*
+    
     @Column(name = "date_operation")
     private LocalDate operationDate;
     
@@ -41,7 +46,7 @@ public class Operation implements Serializable{
 	public void setOperationDate(LocalDate operationDate) {
 		this.operationDate = operationDate;
 	}
-	*/
+	
 	
 	@ManyToOne
     @JoinColumn(name="id_account")
@@ -66,5 +71,13 @@ public class Operation implements Serializable{
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
+	
+	public String getTypeOperation() {
+		return typeOperation;
+	}
+	public void setTypeOperation(String typeOperation) {
+		this.typeOperation = typeOperation;
+	}
+
 
 }

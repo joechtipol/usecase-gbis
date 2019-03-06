@@ -1,5 +1,6 @@
 package fr.ych.userstory.banking.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -14,28 +15,29 @@ import fr.ych.userstory.banking.model.OutputOperationMessage;
 import fr.ych.userstory.banking.repo.AccountRepository;
 import fr.ych.userstory.banking.repo.OperationRepository;
 import fr.ych.userstory.banking.service.AccountService;
+import fr.ych.userstory.banking.util.ConstantsUtils;
 
 @Service
 @Transactional
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
-    private AccountRepository repository;
+    private AccountRepository accountRepository;
     
     @Autowired
     private OperationRepository operationRepository;
 
 
     public List<Account> findAll() {
-        return repository.findAll();
+        return accountRepository.findAll();
     }
 
     public Account findById(int id) {
-        return repository.findOne(id);
+        return accountRepository.findOne(id);
     }
 
     public Account update(Account account) {
-        return repository.save(account);
+        return accountRepository.save(account);
     }
 
 	public OutputOperationMessage deposit(Account account, double amount) {
@@ -49,10 +51,11 @@ public class AccountServiceImpl implements AccountService {
 		}
 	
       Operation operation=new Operation();
+      
       operation.setAccount(account);
       operation.setAmount(amount);
-      
-     // operation.setOperationDate(LocalDate.now());
+      operation.setTypeOperation(ConstantsUtils.DEPOSIT_TYPE);
+      operation.setOperationDate(LocalDate.now());
       operationRepository.save(operation);
 
       account.setBalance(account.getBalance()+amount);
@@ -77,8 +80,8 @@ public class AccountServiceImpl implements AccountService {
       Operation operation=new Operation();
       operation.setAccount(account);
       operation.setAmount(amount);
-      
-      //operation.setOperationDate(LocalDate.now());
+      operation.setTypeOperation(ConstantsUtils.WITHDRAW_TYPE);
+      operation.setOperationDate(LocalDate.now());
       operationRepository.save(operation);
 
       account.setBalance(account.getBalance()-amount);
